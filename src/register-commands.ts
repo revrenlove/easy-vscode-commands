@@ -1,10 +1,14 @@
 import * as vscode from 'vscode';
 import { CommandBase } from "./command-base";
-import { ContextCommandBase } from './context-command-base';
 
+/**
+ * Registers all commands supplied and pushes them to the `context`
+ * @param context - `vscode.ExtensionContext` - just pass the `context` variable from the `activate` method
+ * @param commands - Array of command classes - e.g. `[HelloWorldCommand]`
+ */
 export function registerCommands(
     context: vscode.ExtensionContext,
-    commands: ((new () => CommandBase) | (new (context: vscode.ExtensionContext) => ContextCommandBase))[]): void {
+    commands: (new (context: vscode.ExtensionContext) => CommandBase)[]): void {
 
     commands.forEach(command => {
 
