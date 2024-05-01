@@ -1,57 +1,102 @@
-# Easy VSCode Commands
+# @revrenlove/easy-vscode-commands
 
-This library/pattern helps keep the code for your commands in your VSCode extension a touch more structured and clean (hopefully).
+Helper library to de-clutter the `activate` method of the `extension.ts`.
 
-## Installation
+## Requirements
 
-`npm install @revrenlove/easy-vscode-commands`
+Enable `experimentalDecorators`.
 
-## "Tl;dr;"
+`tsconfig.json`
 
-### `src/hello-world.ts`
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
+```
+
+## Basic Usage
+
+### Declare A Command
+
+`package.json`
+
+```json
+{
+  "contributes": {
+    "commands": [
+      {
+        "command": "your-org.howdyEarth",
+        "title": "Howdy, Earth!" 
+      }
+    ]
+  }
+}
+```
+
+### Create A Command
+
+`src/howdy-earth-command.ts`
 
 ```ts
+import * as vscode from 'vscode';
 import { CommandBase, commandId } from '@revrenlove/easy-vscode-commands';
 
-@commandId('whatever.helloWorld') // This should match the command contribute in your package.json
-export class HelloWorldCommand extends CommandBase {
-    
-    public async execute(): Promise<void> {
+@commandId('your-org.howdyEarth')
+export class HowdyEarthCommand extends CommandBase {
 
-        // whatever code you want to execute for your command
-
-        // e.g.: console.log('Hello, World!!!');
+    public execute(): void {
+        vscode.window.showInformationMessage('Howdy, Earth!');
     }
 }
 ```
 
-### `src/extension.ts`
+### Register A Command
+
+`src/extension.ts`
 
 ```ts
 import * as vscode from 'vscode';
-import { HelloWorldCommand } from './hello-world-command';
 import { registerCommands } from '@revrenlove/easy-vscode-commands';
+import { HowdyEarthCommand } from './howdy-earth-command';
 
 export function activate(context: vscode.ExtensionContext) {
-
-    // ...
-    registerCommands(context, [HelloWorldCommand]);
-    // ...
+    registerCommands(context, [HowdyEarthCommand]);
 }
 
 export function deactivate() { }
 ```
 
-## Usage
+## Extra Features
 
-The goal behind this package is to de-clutter the command definitions/registration in the `activate` method of your `extension.ts` file. It contains 2 abstract classes (`CommandBase`, `ContextCommandBase`) from which you can inherit to define your commands, a decorator function (`commandId`) to declare an Id, and a method to register your commands (`registerCommands`). In addition, it makes calling one command from another command a little more sane without reliance on magic strings.
+`src/fancy-command.ts`
 
-### Command Classes
+```ts
+import * as vscode from 'vscode';
+import { CommandBase, commandId } from '@revrenlove/easy-vscode-commands';
+import { HowdyEarthCommand } from './howdy-earth-command';
 
-#### `commandId(command: string)` decorator
+@commandId('your-org.fancy')
+export class FancyCommand extends CommandBase {
 
-This is used to decorate each of your classes with an id that corresponds to the id listed in the `commands` contribution point of your `package.json`. This is equivalent to the `command` parameter of the `vscode.commands.registerCommand` method.
+    // `async`/`await` is supported
+    public async execute(): Promise<void> {
 
-#### `execute` method
+        // Access `vscode.ExtensionContext` instance with `this.context`
+        const extensionId = this.context.extension.id;
+        await vscode.window.showInformationMessage(`Extension Id: ${extensionId}`);
 
-Each class extending the abstract classes will need to implement an `execute` method. This is equivalent `callback` parameter of the `vscode.commands.registerCommand` method.
+        // Static `commandId` property (comes from the `commandId` decorator)
+        vscode.commands.executeCommand(HowdyEarthCommand.commandId);
+    }
+}
+```
+
+## Dependency Injection
+
+- Register the `vscode.ExtensionContext` instance in your container.
+
+- Inject that into your command.
+
+- Call `super` and pass in the `vscode.ExtensionContext` instance.
