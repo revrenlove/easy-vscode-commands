@@ -1,6 +1,6 @@
 {
   "name": "@revrenlove/easy-vscode-commands",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Helper library to de-clutter the `activate` method of the `extension.ts`.",
   "publisher": "revrenlove",
   "license": "MIT",
