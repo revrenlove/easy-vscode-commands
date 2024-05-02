@@ -3,8 +3,11 @@
         "src/index.ts"
     ],
     "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
+        "target": "ES2022",
+        "module": "Node16",
+        "lib": [
+            "ES2020"
+        ],
         "declaration": true,
         "outDir": "./dist",
         "noEmit": false,
