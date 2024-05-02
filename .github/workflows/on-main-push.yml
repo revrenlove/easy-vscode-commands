@@ -34,6 +34,11 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - run: npm publish
+            - name: Log in to npm
+              run: npm login --registry=https://registry.npmjs.org/ --scope=@yrevrenlove --always-auth false
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - run: npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
