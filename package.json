@@ -1,6 +1,6 @@
 {
   "name": "@revrenlove/easy-vscode-commands",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0",
   "description": "Helper library to de-clutter the `activate` method of the `extension.ts`.",
   "publisher": "revrenlove",
   "license": "MIT",
@@ -9,17 +9,15 @@
     "command",
     "commands"
   ],
-  "icon": "./icon.png",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/revrenlove/easy-vscode-commands.git"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
+  "type": "commonjs",
   "files": [
-    "./dist",
-    "./icon.png"
+    "./dist"
   ],
   "scripts": {
     "build": "tsc"
