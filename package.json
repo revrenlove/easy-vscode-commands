@@ -12,10 +12,15 @@
   "icon": "./icon.png",
   "repository": {
     "type": "git",
-    "url": "github:revrenlove/easy-vscode-commands"
+    "url": "git+https://github.com/revrenlove/easy-vscode-commands.git"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "./dist",
+    "./icon.png"
+  ],
   "scripts": {
     "build": "tsc"
   },
