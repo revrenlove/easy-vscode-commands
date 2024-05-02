@@ -1,6 +1,14 @@
 # @revrenlove/easy-vscode-commands
 
-Helper library to de-clutter the `activate` method of the `extension.ts`.
+This is for developers of VSCode extensions.
+
+If you find the `activate` method of your `extension.ts` file feeling a little cluttered, perhaps this can help.
+
+The idea is that instead of manually registering each command of your extension, just make a new class file for each command.
+
+## Install
+
+`npm i @revrenlove/easy-vscode-commands`
 
 ## Requirements
 
