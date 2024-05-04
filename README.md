@@ -101,6 +101,42 @@ export class FancyCommand extends CommandBase {
 }
 ```
 
+## `registerCommands`/`EasyVsCodeCommand`
+
+The second parameter of the `registerCommands` function accepts an array of `EasyVsCodeCommand` types - any class definition extending `CommandBase` qualifies.
+
+What _I_ like to do is have all my commands in a `commands` folder with an `index.ts` that exports an array of all the commands.
+
+For example:
+
+`commands/index.ts`
+
+```ts
+import { HelloWorldCommand } from './hello-world-command.ts';
+import { HelloMoonCommand } from './hello-moon-command.ts';
+
+const commands: EasyVsCodeCommand[] = [
+    HelloWorldCommand,
+    HelloMoonCommand
+];
+
+export { commands };
+```
+
+And then in the `extension.ts`:
+
+```ts
+import * as vscode from 'vscode';
+import { registerCommands } from '@revrenlove/easy-vscode-commands';
+import { commands } from './commands';
+
+export function activate(context: vscode.ExtensionContext) {
+    registerCommands(context, commands);
+}
+
+export function deactivate() { }
+```
+
 ## Dependency Injection
 
 - Register the `vscode.ExtensionContext` instance in your container.

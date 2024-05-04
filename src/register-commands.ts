@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { CommandBase } from "./command-base";
+import { EasyVsCodeCommand } from './easy-vscode-command';
 
 /**
  * Registers all commands supplied and pushes them to the `context`
@@ -8,7 +9,7 @@ import { CommandBase } from "./command-base";
  */
 export function registerCommands(
     context: vscode.ExtensionContext,
-    commands: (new (context: vscode.ExtensionContext) => CommandBase)[]): void {
+    commands: EasyVsCodeCommand[]): void {
 
     commands.forEach(command => {
 
