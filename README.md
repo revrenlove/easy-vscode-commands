@@ -101,6 +101,8 @@ export class FancyCommand extends CommandBase {
 }
 ```
 
+## `registerCommands`
+
 ## Dependency Injection
 
 - Register the `vscode.ExtensionContext` instance in your container.
